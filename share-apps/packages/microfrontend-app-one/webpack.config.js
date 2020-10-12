@@ -1,65 +1,66 @@
-var path = require('path')
-var webpack = require('webpack')
-const HtmlWebpackPlugin = require("html-webpack-plugin")
-const { VueLoaderPlugin } = require('vue-loader')
-const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin") 
+const path = require("path");
+const { VueLoaderPlugin } = require("vue-loader");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { ModuleFederationPlugin } = require("webpack").container;
 
-module.exports = {
+module.exports = (env = {}) => ({
     mode: 'development',
-    entry: { app: './src/main.ts' },
+    entry: path.resolve(__dirname, "./src/main.js"),
+    devtool: "source-map",
+    // output: {
+    //     publicPath: 'http://localhost:8081/',
+    //     filename: '[name].js'
+    // },
     output: {
-        publicPath: 'http://localhost:8081/',
-        filename: '[name].js'
+        publicPath: "auto",
+    },
+    resolve: {
+        extensions: [".vue", ".jsx", ".js", ".json"],
+        alias: {
+            // this isn't technically needed, since the default `vue` entry for bundlers
+            // is a simple `export * from '@vue/runtime-dom`. However having this
+            // extra re-export somehow causes webpack to always invalidate the module
+            // on the first HMR update and causes the page to reload.
+            vue: "@vue/runtime-dom",
+        },
     },
     module: {
         rules: [
             {
                 test: /\.vue$/,
-                loader: 'vue-loader',
+                use: "vue-loader",
             },
             {
-                test: /.css$/,
+                test: /\.png$/,
+                use: {
+                    loader: "url-loader",
+                    options: { limit: 8192 },
+                },
+            },
+            {
+                test: /\.css$/,
                 use: [
-                    'vue-style-loader',
-                    'css-loader',
-                ]
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: { hmr: !env.prod },
+                    },
+                    "css-loader",
+                ],
             },
-            {
-                test: /\.tsx?$/,
-                loader: 'ts-loader',
-                exclude: /node_modules/,
-                options: {
-                    appendTsSuffixTo: [/\.vue$/],
-                }
-            },
-            {
-                test: /\.(png|jpg|gif|svg)$/,
-                loader: 'file-loader',
-                options: {
-                    name: '[name].[ext]?[hash]'
-                }
-            }
-        ]
-    },
-    resolve: {
-        extensions: ['.ts', '.js', '.vue', '.json'],
-        alias: {
-            'assets': path.resolve(__dirname, './src/assets'),
-            'vue$': 'vue/dist/vue.esm.js',
-            '@': path.join(__dirname, './src')
-        }
+        ],
     },
     devServer: {
         port: 8081,
         noInfo: false,
         overlay: true,
-        contentBase: path.join(__dirname, "dist"),
-    },
-    performance: {
-        hints: false
+        contentBase: path.join(__dirname),
     },
     plugins: [
         new VueLoaderPlugin(),
+        new MiniCssExtractPlugin({
+            filename: "[name].css",
+        }),
         new ModuleFederationPlugin({
             name: "micro_frontend_one",
             filename: "remoteEntry.js",
@@ -68,12 +69,8 @@ module.exports = {
             }
         }),
         new HtmlWebpackPlugin({
-            template: "./public/index.html",
-            inject: true,
-            title: 'Micro frontend one'
-        }),
-        new webpack.DefinePlugin({
-            BASE_URL: JSON.stringify('./')
+            template: "./public/index.html", 
+            chunks: ["main"],
         })
     ]
-}
+});

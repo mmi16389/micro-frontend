@@ -1,18 +1,16 @@
 <template>
   <div>
-    <v-main> 
+    <v-main>
+      <div>HEl : {{ msg }}</div>
     </v-main>
   </div>
 </template>
-<script lang="ts">
-import Vue from "vue";
-import Component from "vue-class-component";
-import Header from 'app_2/Header' 
-
-@Component({
-  components: {
-    Header
+<script>
+export default {
+  data: () => {
+    return {
+      msg: "hello the world",
+    };
   },
-})
-export default class App extends Vue {}
+}
 </script>

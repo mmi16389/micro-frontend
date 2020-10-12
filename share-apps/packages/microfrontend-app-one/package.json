@@ -2,11 +2,12 @@
   "name": "@microfrontend/app-one",
   "version": "1.0.0",
   "description": "Module federation Micro-frontend",
-  "main": "maint.ts",
+  "main": "main",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "serve": "webpack-dev-server",
-    "build": "webpack"
+    "start": "webpack-cli serve",
+    "serve": "serve dist -p 8081",
+    "build": "webpack --mode production",
+    "clean": "rm -rf dist"
   },
   "author": "",
   "license": "ISC"
