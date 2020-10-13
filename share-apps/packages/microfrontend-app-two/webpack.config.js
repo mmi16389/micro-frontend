@@ -5,10 +5,12 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
 const webpack = require('webpack');
 
+const deps = require("./package.json").dependencies;
+
 module.exports = (env = {}) => ({
   mode: 'development',
   target: "web",
-  entry: path.resolve(__dirname, "./src/main.js"),
+  entry: path.resolve(__dirname, "./src/main.ts"),
   devtool: "source-map",
   optimization: {
     minimize: false,
@@ -21,7 +23,7 @@ module.exports = (env = {}) => ({
     publicPath: "auto",
   },
   resolve: {
-    extensions: [".vue", ".jsx", ".js", ".json"],
+    extensions: [".ts", ".vue", ".jsx", ".js", ".json"],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': path.join(__dirname, './src')
@@ -39,6 +41,36 @@ module.exports = (env = {}) => ({
       {
         test: /\.vue$/,
         use: { loader: "vue-loader", }
+      },
+      {
+        test: /\.tsx?$/,
+        loader: 'ts-loader',
+        exclude: /node_modules/,
+        options: {
+          appendTsSuffixTo: [/\.vue$/],
+        }
+      },
+      {
+        test: /\.s(c|a)ss$/,
+        use: [
+          'vue-style-loader',
+          'css-loader',
+          {
+            loader: 'sass-loader',
+            // Requires sass-loader@^7.0.0
+            options: {
+              implementation: require('sass'),
+              indentedSyntax: true // optional
+            },
+            // Requires sass-loader@^8.0.0
+            options: {
+              implementation: require('sass'),
+              sassOptions: {
+                indentedSyntax: true // optional
+              },
+            },
+          },
+        ],
       },
       {
         test: /\.png$/,
@@ -70,8 +102,15 @@ module.exports = (env = {}) => ({
         header: "header@http://localhost:3002/remoteEntry.js",
       },
       exposes: {
-        "./Header": './src/components/Header.vue'
+        "./Header": './src/components/Layouts/Header.vue',
+        "./Footer": './src/components/Layouts/Footer.vue'
       },
+      shared: {
+        "vuetify": {
+          eager: true,
+          singleton: false
+        }
+      }
     }),
     new HtmlWebpackPlugin({
       template: "./public/index.html",

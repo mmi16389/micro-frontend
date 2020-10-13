@@ -1,16 +1,26 @@
 <template>
-  <div>
-    REMOTES APPS
-     <Header/>
-  </div>
+  <v-app>
+    <!-- Must have the app property -->
+    <Header />
+    <v-main>
+      <v-container>
+        Hello World
+      </v-container>
+    </v-main>
+    <Footer/>
+  </v-app>
 </template>
-<script>
+<script lang="ts">
 // import { ref, defineAsyncComponent } from "vue";
-const Header = () => import("header/Header");
+import { Vue, Component, Prop } from "vue-property-decorator";
+const Footer = () => import("header/Footer");
+import  Header from './components/Layouts/Header.vue';
 
-export default {
+@Component({
   components: {
-    Header
+    Header,
+    Footer
   }
-};
+})
+export default class App extends Vue {}
 </script>
