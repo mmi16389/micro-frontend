@@ -6,7 +6,7 @@ const { ModuleFederationPlugin } = require("webpack").container;
 
 module.exports = (env = {}) => ({
     mode: 'development',
-    entry: path.resolve(__dirname, "./src/main.js"),
+    entry: path.resolve(__dirname, "./src/main.ts"),
     devtool: "source-map",
     // output: {
     //     publicPath: 'http://localhost:8081/',
@@ -16,8 +16,10 @@ module.exports = (env = {}) => ({
         publicPath: "auto",
     },
     resolve: {
-        extensions: [".vue", ".jsx", ".js", ".json"],
+        extensions: [".ts", ".vue", ".jsx", ".js", ".json"],
         alias: {
+            'vue$': 'vue/dist/vue.esm.js',
+            '@': path.join(__dirname, './src')
             // this isn't technically needed, since the default `vue` entry for bundlers
             // is a simple `export * from '@vue/runtime-dom`. However having this
             // extra re-export somehow causes webpack to always invalidate the module
@@ -30,6 +32,36 @@ module.exports = (env = {}) => ({
             {
                 test: /\.vue$/,
                 use: "vue-loader",
+            },
+            {
+                test: /\.tsx?$/,
+                loader: 'ts-loader',
+                exclude: /node_modules/,
+                options: {
+                    appendTsSuffixTo: [/\.vue$/],
+                }
+            },
+            {
+                test: /\.s(c|a)ss$/,
+                use: [
+                    'vue-style-loader',
+                    'css-loader',
+                    {
+                        loader: 'sass-loader',
+                        // Requires sass-loader@^7.0.0
+                        options: {
+                            implementation: require('sass'),
+                            indentedSyntax: true // optional
+                        },
+                        // Requires sass-loader@^8.0.0
+                        options: {
+                            implementation: require('sass'),
+                            sassOptions: {
+                                indentedSyntax: true // optional
+                            },
+                        },
+                    },
+                ],
             },
             {
                 test: /\.png$/,
@@ -69,8 +101,7 @@ module.exports = (env = {}) => ({
             }
         }),
         new HtmlWebpackPlugin({
-            template: "./public/index.html", 
-            chunks: ["main"],
+            template: "./public/index.html",
         })
     ]
 });

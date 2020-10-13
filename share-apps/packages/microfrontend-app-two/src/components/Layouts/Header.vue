@@ -29,12 +29,13 @@
     </v-navigation-drawer>
   </div>
 </template>
-<script lang="ts">
-import { Vue, Component, Prop } from "vue-property-decorator";
-
-@Component({})
-export default class Header extends Vue {
-  drawer = false;
-  group = null;
+<script>
+export default {
+     data:()=>{
+       return {
+         group : null,
+         drawer: false
+       }
+     }
 }
 </script>

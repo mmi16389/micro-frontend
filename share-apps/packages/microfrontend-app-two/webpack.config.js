@@ -10,7 +10,7 @@ const deps = require("./package.json").dependencies;
 module.exports = (env = {}) => ({
   mode: 'development',
   target: "web",
-  entry: path.resolve(__dirname, "./src/main.ts"),
+  entry: path.resolve(__dirname, "./src/main.js"),
   devtool: "source-map",
   optimization: {
     minimize: false,
@@ -41,14 +41,6 @@ module.exports = (env = {}) => ({
       {
         test: /\.vue$/,
         use: { loader: "vue-loader", }
-      },
-      {
-        test: /\.tsx?$/,
-        loader: 'ts-loader',
-        exclude: /node_modules/,
-        options: {
-          appendTsSuffixTo: [/\.vue$/],
-        }
       },
       {
         test: /\.s(c|a)ss$/,
@@ -104,12 +96,6 @@ module.exports = (env = {}) => ({
       exposes: {
         "./Header": './src/components/Layouts/Header.vue',
         "./Footer": './src/components/Layouts/Footer.vue'
-      },
-      shared: {
-        "vuetify": {
-          eager: true,
-          singleton: false
-        }
       }
     }),
     new HtmlWebpackPlugin({

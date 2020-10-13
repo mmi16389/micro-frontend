@@ -10,17 +10,13 @@
     <Footer/>
   </v-app>
 </template>
-<script lang="ts">
-// import { ref, defineAsyncComponent } from "vue";
-import { Vue, Component, Prop } from "vue-property-decorator";
+<script>
+const Header = () => import("header/Header");
 const Footer = () => import("header/Footer");
-import  Header from './components/Layouts/Header.vue';
-
-@Component({
+export default {
   components: {
-    Header,
-    Footer
+    Footer,
+    Header
   }
-})
-export default class App extends Vue {}
+};
 </script>

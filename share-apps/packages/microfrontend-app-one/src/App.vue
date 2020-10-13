@@ -1,8 +1,13 @@
 <template>
-  <div>
-    <div>HEl : {{ msg }}</div>
-    <Header/>
-  </div>
+ <v-app>
+    <!-- Must have the app property -->
+    <Header />
+    <v-main>
+      <v-container>
+        Hello World
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
 <script>
 const Header = () => import("header/Header");
