@@ -23,18 +23,22 @@ module.exports = (env = {}) => ({
   resolve: {
     extensions: [".vue", ".jsx", ".js", ".json"],
     alias: {
+      'vue$': 'vue/dist/vue.esm.js',
+      '@': path.join(__dirname, './src')
+      // 'vue$': 'vue/dist/vue.esm.js'
+      // 'vue$': 'vue/dist/vue'
       // this isn't technically needed, since the default `vue` entry for bundlers
       // is a simple `export * from '@vue/runtime-dom`. However having this
       // extra re-export somehow causes webpack to always invalidate the module
       // on the first HMR update and causes the page to reload.
-      // vue: "@vue/runtime-dom",
+      // vue$: "@vue/compile-dom",
     },
   },
   module: {
     rules: [
       {
         test: /\.vue$/,
-        use: "vue-loader",
+        use: { loader: "vue-loader", }
       },
       {
         test: /\.png$/,
@@ -56,15 +60,14 @@ module.exports = (env = {}) => ({
     ],
   },
   plugins: [
-    new VueLoaderPlugin(),
     new MiniCssExtractPlugin({
       filename: "[name].css",
     }),
     new ModuleFederationPlugin({
-      name: "micro_frontend_two",
+      name: "header",
       filename: "remoteEntry.js",
       remotes: {
-        app_2: "micro_frontend_two@http://localhost:8082/remoteEntry.js",
+        header: "header@http://localhost:3002/remoteEntry.js",
       },
       exposes: {
         "./Header": './src/components/Header.vue'
@@ -73,17 +76,18 @@ module.exports = (env = {}) => ({
     new HtmlWebpackPlugin({
       template: "./public/index.html",
     }),
-    new webpack.DefinePlugin({
-      BASE_URL: JSON.stringify('./')
-    }),
+    new VueLoaderPlugin(),
   ],
   devServer: {
-    port: 8082,
-    noInfo: true,
-    overlay: true,
-    contentBase: path.join(__dirname, "dist"),
+    contentBase: path.join(__dirname),
+    compress: true,
+    port: 3002,
+    hot: true,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+      "Access-Control-Allow-Headers":
+        "X-Requested-With, content-type, Authorization",
+    },
   },
-  performance: {
-    hints: false
-  }
 });

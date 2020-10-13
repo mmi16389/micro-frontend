@@ -22,7 +22,7 @@ module.exports = (env = {}) => ({
             // is a simple `export * from '@vue/runtime-dom`. However having this
             // extra re-export somehow causes webpack to always invalidate the module
             // on the first HMR update and causes the page to reload.
-            vue: "@vue/runtime-dom",
+            // vue: "@vue/runtime-dom",
         },
     },
     module: {
@@ -51,7 +51,7 @@ module.exports = (env = {}) => ({
         ],
     },
     devServer: {
-        port: 8081,
+        port: 3001,
         noInfo: false,
         overlay: true,
         contentBase: path.join(__dirname),
@@ -65,7 +65,7 @@ module.exports = (env = {}) => ({
             name: "micro_frontend_one",
             filename: "remoteEntry.js",
             remotes: {
-                app_2: "micro_frontend_two@http://localhost:8082/remoteEntry.js",
+                header: "header@http://localhost:3002/remoteEntry.js",
             }
         }),
         new HtmlWebpackPlugin({

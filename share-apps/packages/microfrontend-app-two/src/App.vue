@@ -1,12 +1,16 @@
 <template>
   <div>
     REMOTES APPS
+     <Header/>
   </div>
 </template>
 <script>
-import Header from 'app_2/Header';
+// import { ref, defineAsyncComponent } from "vue";
+const Header = () => import("header/Header");
 
 export default {
-
-}
+  components: {
+    Header
+  }
+};
 </script>
