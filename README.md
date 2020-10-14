@@ -1,10 +1,11 @@
 # VueJs Module Federation  Microfrontend
 
-This example demos consumption of federated modules from a Webpack bundle. `layout` app depends on a component exposed by `home` app.
-
 Cet exemple montre l'utilisation du Module Federation en cas de partage de bundle Webpack, basant sur le process d'architecure Micro Frontend. 
 
+## HOST AND REMOTE
+
 L'application `microfrontend-app-one` dépend d'un composant `Header` exposé par l'application  ` microfrontend-app-two`.
+
 ---
 
 # Running Demo
