@@ -10,7 +10,7 @@ const deps = require("./package.json").dependencies;
 module.exports = (env = {}) => ({
   mode: 'development',
   target: "web",
-  entry: path.resolve(__dirname, "./src/main.js"),
+  entry: path.resolve(__dirname, "./src/index.js"),
   devtool: "source-map",
   optimization: {
     minimize: false,
@@ -96,10 +96,18 @@ module.exports = (env = {}) => ({
       exposes: {
         "./Header": './src/components/Layouts/Header.vue',
         "./Footer": './src/components/Layouts/Footer.vue'
+      },
+      shared: {
+        "vuetify": {
+          eager: true,
+          singleton: true,
+          requiredVersion: deps["vuetify"],
+        }
       }
     }),
     new HtmlWebpackPlugin({
       template: "./public/index.html",
+      title: "Remote App: Module Federation"
     }),
     new VueLoaderPlugin(),
   ],

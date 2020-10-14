@@ -6,7 +6,7 @@ const { ModuleFederationPlugin } = require("webpack").container;
 
 module.exports = (env = {}) => ({
     mode: 'development',
-    entry: path.resolve(__dirname, "./src/main.ts"),
+    entry: path.resolve(__dirname, "./src/index.ts"),
     devtool: "source-map",
     // output: {
     //     publicPath: 'http://localhost:8081/',
@@ -102,6 +102,7 @@ module.exports = (env = {}) => ({
         }),
         new HtmlWebpackPlugin({
             template: "./public/index.html",
+            title: "App One"
         })
     ]
 });
