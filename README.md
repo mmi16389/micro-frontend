@@ -1,6 +1,6 @@
 # VueJs Module Federation  Microfrontend
 
-Cet exemple montre l'utilisation du Module Federation en cas de partage de bundle Webpack, basant sur le process d'architecure Micro Frontend. 
+Cet exemple montre l'utilisation du Module Federation en cas de partage de bundle Webpack, basant sur le process d'architecture Micro Frontend. 
 
 ## HOST AND REMOTE
 
