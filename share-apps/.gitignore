@@ -2,3 +2,4 @@
 /node_modules/
 package-lock.lock
 packages/*/dist/
+.vscode
