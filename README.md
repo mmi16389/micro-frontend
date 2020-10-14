@@ -14,3 +14,12 @@ Run `yarn start` . Cela permet de build et serve  `microfrontend-app-one` et `mi
 
 - HOST (microfrontend-app-one): [localhost:3001](http://localhost:3001/)
 - REMOTE (microfrontend-app-two): [localhost:3002](http://localhost:3002/)
+
+
+# Axe d'amelioration et recherche 
+
+- Combinaison de Webpack 5 avec la Vue CLI (Webpack 4) [webpack merge, webpack chain, vue-loader-plugin ](https://www.npmjs.com/package/vue-loader-plugin)
+- Chargement dynamique Module Federation 
+- Gestion des Fallback
+- Consommé des composants Vue 3 vers Vue 2 vice versa....
+- Autres ,...etc
