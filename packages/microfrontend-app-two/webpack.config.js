@@ -15,10 +15,6 @@ module.exports = (env = {}) => ({
   optimization: {
     minimize: false,
   },
-  // output: {
-  //   publicPath: 'http://localhost:8082/',
-  //   filename: '[name].js'
-  // },
   output: {
     publicPath: "auto",
   },
@@ -27,13 +23,6 @@ module.exports = (env = {}) => ({
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': path.join(__dirname, './src')
-      // 'vue$': 'vue/dist/vue.esm.js'
-      // 'vue$': 'vue/dist/vue'
-      // this isn't technically needed, since the default `vue` entry for bundlers
-      // is a simple `export * from '@vue/runtime-dom`. However having this
-      // extra re-export somehow causes webpack to always invalidate the module
-      // on the first HMR update and causes the page to reload.
-      // vue$: "@vue/compile-dom",
     },
   },
   module: {
@@ -116,11 +105,5 @@ module.exports = (env = {}) => ({
     compress: true,
     port: 3002,
     hot: true,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
-      "Access-Control-Allow-Headers":
-        "X-Requested-With, content-type, Authorization",
-    },
   },
 });
