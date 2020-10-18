@@ -87,10 +87,9 @@ module.exports = (env = {}) => ({
         "./Footer": './src/components/Layouts/Footer.vue'
       },
       shared: {
-        "vuetify": {
-          eager: true,
+        vuetify: {
           singleton: true,
-          requiredVersion: deps["vuetify"],
+          requiredVersion: "2.3.10",
         }
       }
     }),

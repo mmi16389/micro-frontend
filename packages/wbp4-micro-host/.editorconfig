@@ -1,5 +1,16 @@
-[*.{js,jsx,ts,tsx,vue}]
+# editorconfig.org
+root = true
+
+[*]
+indent_style = tab
+indent_size = 4
+end_of_line = lf
+charset = utf-8
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# Overwrite for MarkDown
+[*.md]
 indent_style = space
 indent_size = 2
-trim_trailing_whitespace = true
-insert_final_newline = true
+trim_trailing_whitespace = false

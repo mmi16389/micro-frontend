@@ -11,17 +11,10 @@
   </v-app>
 </template>
 <script>
-const Header = () =>
-  window.header.get('./Header').then(factory => {
-    const Module = factory()
-    return Module
-  })
+import loadModule from './loadDynamicModule'
+const Header = () => loadModule('header', './Header')
+const Footer = () => loadModule('header', './Footer')
 
-const Footer = () =>
-  window.header.get('./Footer').then(factory => {
-    const Module = factory()
-    return Module
-  })
 export default {
   components: {
     Header,
